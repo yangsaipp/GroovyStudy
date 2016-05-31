@@ -40,7 +40,7 @@ class IOStudy {
 			while((b = stream.read()) != -1) {
 			//	byte to char
 				byteList.add(b)
-				if(b == 10) {	// /n ���з�
+				if(b == 10) {	// 
 					def byteA = new byte[byteList.size()];
 					byteList.eachWithIndex {it,i ->
 						byteA[i] = it
@@ -64,5 +64,23 @@ class IOStudy {
 		}
 	}
 	
+	/**
+	 * 复制文件
+	 * @param src 被复制的文件
+	 * @param dist 复制后存放的文件
+	 * @return
+	 */
+	def copyFile(File src, File dist) {
+		FileOutputStream fos = new FileOutputStream(src)
+		dist.withInputStream {is ->
+			int c;
+			byte[] buffer = new byte[1024]
+			while((c = is.read(buffer, 0, buffer.length)) != -1) {
+				fos.write(buffer, 0, c)
+			}
+			fos.flush()
+			fos.close()
+		}
+	}
 	
 }
